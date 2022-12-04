@@ -22,6 +22,11 @@ namespace Subtitles
             Color = color;
         }
 
+        public override string ToString() // временно для проверки
+        {
+            return $"{StartTime}, {EndTime}, {Text}, {Position}, {Color}";
+        }
+
     }
 
     internal class SubtitlesLoader
@@ -40,7 +45,22 @@ namespace Subtitles
 
                 string position;
                 string color;
-                string subText;
+                string subText = "";
+
+                if (line[3][0] == '[')
+                {
+                    position = line[3].Replace("[", "").Replace(",", "");
+                    color = line[4].Replace("]", "");
+                    subText = line[5];
+                    subtitles.Add(new Subtitle(startTime, endTime, subText, position, color));
+                    continue;
+                }
+                for (int j = 3; j < line.Length; j++)
+                {
+                    subText += $"{line[j]} ";
+                }
+                subtitles.Add(new Subtitle(startTime, endTime, subText));
+
             }
         }
 
