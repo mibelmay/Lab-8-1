@@ -23,4 +23,26 @@ namespace Subtitles
         }
 
     }
+
+    internal class SubtitlesLoader
+    {
+        public static void LoadSubtitles()
+        {
+            string path = "D:\\прога\\8 лаба\\Subtitles\\Subtitles\\bin\\debug\\net6.0\\subs.txt";
+            List<Subtitle> subtitles = new List<Subtitle>();
+            string[] text = File.ReadAllLines(path);
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                string[] line = text[i].Split(' ');
+                int startTime = int.Parse(line[0].Split(':')[0]) * 60 + int.Parse(line[0].Split(':')[1]);
+                int endTime = int.Parse(line[2].Split(':')[0]) * 60 + int.Parse(line[2].Split(':')[1]);
+
+                string position;
+                string color;
+                string subText;
+            }
+        }
+
+    }
 }

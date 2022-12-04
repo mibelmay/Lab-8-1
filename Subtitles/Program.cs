@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Subtitles;
+using System;
 
 namespace Lab8
 {
@@ -6,7 +7,7 @@ namespace Lab8
     {
        static void Main()
         {
-            Console.WriteLine();
+            SubtitlesLoader.LoadSubtitles();
         }
     }
 }
