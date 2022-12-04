@@ -7,7 +7,10 @@ namespace Lab8
     {
        static void Main()
         {
-            SubtitlesLoader.LoadSubtitles();
+            string path = "D:\\прога\\8 лаба\\Subtitles\\Subtitles\\bin\\debug\\net6.0\\subs.txt";
+            Subtitle[] subtitles = SubtitlesLoader.LoadSubtitles(path);
+
+            
         }
     }
 }

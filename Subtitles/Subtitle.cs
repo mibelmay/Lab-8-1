@@ -2,10 +2,11 @@
 using System.Timers;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace Subtitles
 {
-    internal class Subtitle
+    class Subtitle
     {
         public int StartTime { get; set; }
         public int EndTime { get; set; }
@@ -22,7 +23,7 @@ namespace Subtitles
             Color = color;
         }
 
-        public override string ToString() // временно для проверки
+        public override string ToString()
         {
             return $"{StartTime}, {EndTime}, {Text}, {Position}, {Color}";
         }
@@ -31,9 +32,9 @@ namespace Subtitles
 
     internal class SubtitlesLoader
     {
-        public static void LoadSubtitles()
+        public static Subtitle[] LoadSubtitles(string path)
         {
-            string path = "D:\\прога\\8 лаба\\Subtitles\\Subtitles\\bin\\debug\\net6.0\\subs.txt";
+            
             List<Subtitle> subtitles = new List<Subtitle>();
             string[] text = File.ReadAllLines(path);
 
@@ -51,6 +52,10 @@ namespace Subtitles
                 {
                     position = line[3].Replace("[", "").Replace(",", "");
                     color = line[4].Replace("]", "");
+                    for (int j = 5; j < line.Length; j++)
+                    {
+                        subText += $"{line[j]} ";
+                    }
                     subText = line[5];
                     subtitles.Add(new Subtitle(startTime, endTime, subText, position, color));
                     continue;
@@ -62,7 +67,34 @@ namespace Subtitles
                 subtitles.Add(new Subtitle(startTime, endTime, subText));
 
             }
+            return subtitles.ToArray();
         }
 
     }
+
+    internal class DisplaySubtitles
+    {
+
+        private static void SetColor(Subtitle subtitle)
+        {
+            switch (subtitle.Color)
+            {
+                case "Red":
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                case "Green":
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    break;
+                case "Blue":
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    break;
+                case "White":
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
 }
