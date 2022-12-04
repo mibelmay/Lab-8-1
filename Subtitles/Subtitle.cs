@@ -74,8 +74,7 @@ namespace Subtitles
 
     internal class DisplaySubtitles
     {
-
-        private static void SetColor(Subtitle subtitle)
+        public static void SetColor(Subtitle subtitle)
         {
             switch (subtitle.Color)
             {
@@ -94,6 +93,51 @@ namespace Subtitles
                 default:
                     break;
             }
+        }
+
+        private static void SetPosition(Subtitle subtitle)
+        {
+            switch (subtitle.Position)
+            {
+                case "Top":
+                    Console.SetCursorPosition((72 - subtitle.Text.Length) / 2, 3);
+                    break;
+                case "Bottom":
+                    Console.SetCursorPosition((72 - subtitle.Text.Length) / 2, 23);
+                    break;
+                case "Right":
+                    Console.SetCursorPosition(70 - 1 - subtitle.Text.Length, 26 / 2);
+                    break;
+                case "Left":
+                    Console.SetCursorPosition(4, 26 / 2);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public static void DrawBorder() // высота от 3 до 23 ширина от 4 до 70
+        {
+            for (int a = 70; a > 1; a--) 
+            {
+                Console.SetCursorPosition(1, 1);
+                Console.CursorLeft = a;
+                Console.Write("-");
+            }
+            for (int b = 0; b < 20; b++)
+            {
+                Console.SetCursorPosition(2, b + 2);
+                Console.WriteLine("|");
+                Console.SetCursorPosition(70, b + 2);
+                Console.WriteLine("|");
+            }
+            for (int c = 70; c > 1; c--)
+            {
+                Console.SetCursorPosition(1, 22);
+                Console.CursorLeft = c;
+                Console.Write("-");
+            }
+            Console.Read();
         }
     }
 
