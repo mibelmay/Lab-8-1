@@ -57,7 +57,6 @@ namespace Subtitles
                     {
                         subText += $"{line[j]} ";
                     }
-                    subText = line[5];
                     subtitles.Add(new Subtitle(startTime, endTime, subText, position, color));
                     continue;
                 }
@@ -130,8 +129,8 @@ namespace Subtitles
                 case "Red":
                     Console.ForegroundColor = ConsoleColor.Red;
                     break;
-                case "Green":
-                    Console.ForegroundColor = ConsoleColor.Green;
+                case "DarkMagenta":
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     break;
                 case "Blue":
                     Console.ForegroundColor = ConsoleColor.Blue;

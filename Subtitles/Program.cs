@@ -7,8 +7,7 @@ namespace Lab8
     {
        static void Main()
         {
-            string path = Directory.GetCurrentDirectory() + "\\subs.txt";
-            Console.WriteLine(path);
+            string path = Directory.GetCurrentDirectory() + $"\\subs.txt";
             Subtitle[] subtitles = SubtitlesLoader.LoadSubtitles(path);
 
             DisplaySubtitles.DrawBorder();
