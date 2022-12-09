@@ -3,6 +3,7 @@ using System.Timers;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using Timer = System.Threading.Timer;
 
 namespace Subtitles
 {
@@ -72,10 +73,41 @@ namespace Subtitles
 
     }
 
-    internal static class DisplaySubtitles
+    internal class DisplaySubtitles
     {
+
+        private Subtitle[] subtitles;
+        public DisplaySubtitles(Subtitle[] subtitles)
+        {
+            this.subtitles = subtitles;
+        }
+
         static int borderLength = 20;
         static int borderWidth = 70;
+        private static int timerInterval = 1000;
+        private int currentTime = 0;
+
+
+
+        public void Start()
+        {
+            System.Timers.Timer timer = new System.Timers.Timer(1000);
+            timer.Elapsed += Tick;
+            timer.AutoReset = true;
+            timer.Enabled = true;
+
+        }
+        private void Tick(Object obj, ElapsedEventArgs e)
+        {
+            foreach (var subtitle in subtitles)
+            {
+                if (subtitle.StartTime == currentTime) WriteSubtitle(subtitle);
+                else if (subtitle.EndTime == currentTime) DeleteSubtitle(subtitle);
+            }
+            currentTime++;
+        }
+
+
         public static void WriteSubtitle(Subtitle subtitle)
         {
             SetPosition(subtitle);
