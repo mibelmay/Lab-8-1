@@ -11,6 +11,7 @@ namespace Lab8
             Subtitle[] subtitles = SubtitlesLoader.LoadSubtitles(path);
 
             DisplaySubtitles.DrawBorder();
+
         }
     }
 }

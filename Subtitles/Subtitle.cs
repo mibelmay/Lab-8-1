@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace Subtitles
 {
-    class Subtitle
+    internal class Subtitle
     {
         public int StartTime { get; set; }
         public int EndTime { get; set; }
@@ -30,7 +30,7 @@ namespace Subtitles
 
     }
 
-    internal class SubtitlesLoader
+    internal static class SubtitlesLoader
     {
         public static Subtitle[] LoadSubtitles(string path)
         {
@@ -72,8 +72,25 @@ namespace Subtitles
 
     }
 
-    internal class DisplaySubtitles
+    internal static class DisplaySubtitles
     {
+        static int borderLength = 20;
+        static int borderWidth = 70;
+        public static void WriteSubtitle(Subtitle subtitle)
+        {
+            SetPosition(subtitle);
+            SetColor(subtitle);
+            Console.Write(subtitle.Text);
+        }
+
+        public static void DeleteSubtitle(Subtitle subtitle)
+        {
+            SetPosition(subtitle);
+            for (int i = 0; i < subtitle.Text.Length; i++)
+            {
+                Console.Write(" ");
+            }
+        }
         public static void SetColor(Subtitle subtitle)
         {
             switch (subtitle.Color)
@@ -95,49 +112,49 @@ namespace Subtitles
             }
         }
 
-        private static void SetPosition(Subtitle subtitle)
+        public static void SetPosition(Subtitle subtitle)
         {
             switch (subtitle.Position)
             {
                 case "Top":
-                    Console.SetCursorPosition((72 - subtitle.Text.Length) / 2, 3);
+                    Console.SetCursorPosition((borderWidth - subtitle.Text.Length) / 2, 1);
                     break;
                 case "Bottom":
-                    Console.SetCursorPosition((72 - subtitle.Text.Length) / 2, 23);
+                    Console.SetCursorPosition((borderWidth - subtitle.Text.Length) / 2, borderLength);
                     break;
                 case "Right":
-                    Console.SetCursorPosition(70 - 1 - subtitle.Text.Length, 26 / 2);
+                    Console.SetCursorPosition(borderWidth - 1 - subtitle.Text.Length, (borderLength / 2) + 1);
                     break;
                 case "Left":
-                    Console.SetCursorPosition(4, 26 / 2);
+                    Console.SetCursorPosition(3, (borderLength / 2) + 1);
                     break;
                 default:
                     break;
             }
         }
 
-        public static void DrawBorder() // высота от 3 до 23 ширина от 4 до 70
+        public static void DrawBorder() 
         {
-            for (int a = 70; a > 1; a--) 
+            for (int a = borderWidth; a > 0; a--) 
             {
-                Console.SetCursorPosition(1, 1);
+                Console.SetCursorPosition(0, 0);
                 Console.CursorLeft = a;
                 Console.Write("-");
             }
-            for (int b = 0; b < 20; b++)
+            for (int b = 0; b < borderLength; b++)
             {
-                Console.SetCursorPosition(2, b + 2);
+                Console.SetCursorPosition(1, b + 1);
                 Console.WriteLine("|");
-                Console.SetCursorPosition(70, b + 2);
+                Console.SetCursorPosition(borderWidth, b + 1);
                 Console.WriteLine("|");
             }
-            for (int c = 70; c > 1; c--)
+            for (int c = borderWidth; c > 0; c--)
             {
-                Console.SetCursorPosition(1, 22);
+                Console.SetCursorPosition(1, borderLength + 1);
                 Console.CursorLeft = c;
                 Console.Write("-");
             }
-            Console.Read();
+
         }
     }
 
